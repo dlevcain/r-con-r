@@ -403,8 +403,8 @@
   
   # R E S U L T S ------------------------------------------------------------------------------------------------
   observeEvent(input$resultado, {
-    updateTabsetPanel(session, "inTabset",
-                      selected = "Resultados")
+    updateNavbarPage(session, "main_nav",
+                     selected = "Resultados")
   })
   
   #//////////////////////////////////////// variable: 1 ////////////////////////////////////////

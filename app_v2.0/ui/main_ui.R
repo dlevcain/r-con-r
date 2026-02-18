@@ -38,6 +38,7 @@ ui <- fluidPage(
   
   # Main navigation structure
   navbarPage(
+    id = "main_nav",
     title = "Intercanine Distance",
     theme = shinytheme("flatly"),
     
@@ -55,21 +56,11 @@ ui <- fluidPage(
     ),
     
     # Paneles principales
-    tabPanel(
-      "",
-      icon = icon("chart-line"),
-      mainPanel(
-        width = "80%",
-        tabsetPanel(
-          id = "inTabset",
-          home_ui("hm"),
-          reference_sample_ui("rfrncsmpl"),
-          general_description_ui("gnrldscrptn"),
-          description_of_distances_ui("dscrptnfdstncs"),
-          sex_estimation_ui("sxstmtn"),
-          results_ui("rslts")
-        )
-      )
-    )
+    home_ui("hm"),
+    reference_sample_ui("rfrncsmpl"),
+    general_description_ui("gnrldscrptn"),
+    description_of_distances_ui("dscrptnfdstncs"),
+    sex_estimation_ui("sxstmtn"),
+    results_ui("rslts")
   )
 )
