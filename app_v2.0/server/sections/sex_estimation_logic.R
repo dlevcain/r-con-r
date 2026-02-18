@@ -60,139 +60,130 @@
   var5modSustituye_5 <- c("IC.Max", "MD.MaxR", "MD.MaxL", "MD.ManL", "MD.ManR")
   
   
+  # Utilidades para validación de combinaciones de medidas
+  matches_model_group <- function(selected_measures, model_group) {
+    all(selected_measures %in% model_group)
+  }
+
+  matches_any_model <- function(selected_measures, model_groups) {
+    any(vapply(model_groups, function(group) {
+      matches_model_group(selected_measures, group)
+    }, logical(1)))
+  }
+
+  get_measure_inputs <- function(input, num_medidas) {
+    vapply(seq_len(num_medidas), function(i) {
+      input[[paste0("medida", num_medidas, "_", i)]]
+    }, character(1), USE.NAMES = FALSE)
+  }
+
+  get_value_inputs <- function(input, num_medidas) {
+    lapply(seq_len(num_medidas), function(i) {
+      input[[paste0("val", num_medidas, "Med", i)]]
+    })
+  }
+
+  var2mod <- list(var2mod_1, var2mod_2, var2mod_3, var2mod_4, var2mod_5)
+  var2modAgrega <- list(var2modAgrega_1, var2modAgrega_2, var2modAgrega_3)
+  var2modSustituye <- list(
+    var2modSustituye_1, var2modSustituye_2, var2modSustituye_3, var2modSustituye_4,
+    var2modSustituye_5, var2modSustituye_6, var2modSustituye_7
+  )
+
+  var3mod <- list(var3mod_1)
+  var3modAgrega <- list(var3modAgrega_1, var3modAgrega_2, var3modAgrega_3, var3modAgrega_4)
+  var3modSustituye <- list(
+    var3modSustituye_1, var3modSustituye_2, var3modSustituye_3, var3modSustituye_4, var3modSustituye_5,
+    var3modSustituye_6, var3modSustituye_7, var3modSustituye_8, var3modSustituye_9, var3modSustituye_10,
+    var3modSustituye_11, var3modSustituye_12, var3modSustituye_13, var3modSustituye_14, var3modSustituye_15
+  )
+
+  var4modAgrega <- list(var4modAgrega_1, var4modAgrega_2)
+  var4modSustituye <- list(
+    var4modSustituye_1, var4modSustituye_2, var4modSustituye_3, var4modSustituye_4, var4modSustituye_5,
+    var4modSustituye_6, var4modSustituye_7, var4modSustituye_8, var4modSustituye_9, var4modSustituye_10,
+    var4modSustituye_11, var4modSustituye_12, var4modSustituye_13
+  )
+
+  var5modAgrega <- list(var5modAgrega_1)
+  var5modSustituye <- list(var5modSustituye_1, var5modSustituye_2, var5modSustituye_3, var5modSustituye_4, var5modSustituye_5)
+
   #//////////////////////////////////////// variable: 2 //////////////////////////////////////// 
   output$modelosVar2 <- reactive({
-    (input$medida2_1 %in% var2mod_1 && input$medida2_2 %in% var2mod_1) ||
-      (input$medida2_1 %in% var2mod_2 && input$medida2_2 %in% var2mod_2) ||
-      (input$medida2_1 %in% var2mod_3 && input$medida2_2 %in% var2mod_3) ||
-      (input$medida2_1 %in% var2mod_4 && input$medida2_2 %in% var2mod_4) ||
-      (input$medida2_1 %in% var2mod_5 && input$medida2_2 %in% var2mod_5)
+    matches_any_model(get_measure_inputs(input, 2), var2mod)
   })
   outputOptions(output, "modelosVar2", suspendWhenHidden = FALSE)
-  
+
   output$modelosAgVar2 <- reactive({
-    (input$medida2_1 %in% var2modAgrega_1 && input$medida2_2 %in% var2modAgrega_1) ||
-      (input$medida2_1 %in% var2modAgrega_2 && input$medida2_2 %in% var2modAgrega_2) ||
-      (input$medida2_1 %in% var2modAgrega_3 && input$medida2_2 %in% var2modAgrega_3)
+    matches_any_model(get_measure_inputs(input, 2), var2modAgrega)
   })
   outputOptions(output, "modelosAgVar2", suspendWhenHidden = FALSE)
-  
+
   output$modelosSusVar2 <- reactive({
-    (input$medida2_1 %in% var2modSustituye_1 && input$medida2_2 %in% var2modSustituye_1) ||
-      (input$medida2_1 %in% var2modSustituye_2 && input$medida2_2 %in% var2modSustituye_2) ||
-      (input$medida2_1 %in% var2modSustituye_3 && input$medida2_2 %in% var2modSustituye_3) ||
-      (input$medida2_1 %in% var2modSustituye_4 && input$medida2_2 %in% var2modSustituye_4) ||
-      (input$medida2_1 %in% var2modSustituye_5 && input$medida2_2 %in% var2modSustituye_5) ||
-      (input$medida2_1 %in% var2modSustituye_6 && input$medida2_2 %in% var2modSustituye_6) ||
-      (input$medida2_1 %in% var2modSustituye_7 && input$medida2_2 %in% var2modSustituye_7)
+    matches_any_model(get_measure_inputs(input, 2), var2modSustituye)
   })
   outputOptions(output, "modelosSusVar2", suspendWhenHidden = FALSE)
-  
+
   #//////////////////////////////////////// variable: 3 ////////////////////////////////////////
   output$modelosVar3 <- reactive({
-    input$medida3_1 %in% var3mod_1 && input$medida3_2 %in% var3mod_1 && input$medida3_3 %in% var3mod_1
+    matches_any_model(get_measure_inputs(input, 3), var3mod)
   })
   outputOptions(output, "modelosVar3", suspendWhenHidden = FALSE)
-  
+
   output$modelosAgVar3 <- reactive({
-    (input$medida3_1 %in% var3modAgrega_1 && input$medida3_2 %in% var3modAgrega_1 && input$medida3_3 %in% var3modAgrega_1) ||
-      (input$medida3_1 %in% var3modAgrega_2 && input$medida3_2 %in% var3modAgrega_2 && input$medida3_3 %in% var3modAgrega_2) ||
-      (input$medida3_1 %in% var3modAgrega_3 && input$medida3_2 %in% var3modAgrega_3 && input$medida3_3 %in% var3modAgrega_3) ||
-      (input$medida3_1 %in% var3modAgrega_4 && input$medida3_2 %in% var3modAgrega_4 && input$medida3_3 %in% var3modAgrega_4)
+    matches_any_model(get_measure_inputs(input, 3), var3modAgrega)
   })
   outputOptions(output, "modelosAgVar3", suspendWhenHidden = FALSE)
-  
+
   output$modelosSusVar3_1 <- reactive({
-    (input$medida3_1 %in% var3modSustituye_1 && input$medida3_2 %in% var3modSustituye_1 && input$medida3_3 %in% var3modSustituye_1) ||
-      (input$medida3_1 %in% var3modSustituye_2 && input$medida3_2 %in% var3modSustituye_2 && input$medida3_3 %in% var3modSustituye_2) ||
-      (input$medida3_1 %in% var3modSustituye_3 && input$medida3_2 %in% var3modSustituye_3 && input$medida3_3 %in% var3modSustituye_3) ||
-      (input$medida3_1 %in% var3modSustituye_4 && input$medida3_2 %in% var3modSustituye_4 && input$medida3_3 %in% var3modSustituye_4) ||
-      (input$medida3_1 %in% var3modSustituye_5 && input$medida3_2 %in% var3modSustituye_5 && input$medida3_3 %in% var3modSustituye_5) ||
-      (input$medida3_1 %in% var3modSustituye_6 && input$medida3_2 %in% var3modSustituye_6 && input$medida3_3 %in% var3modSustituye_6) ||
-      (input$medida3_1 %in% var3modSustituye_7 && input$medida3_2 %in% var3modSustituye_7 && input$medida3_3 %in% var3modSustituye_7) ||
-      (input$medida3_1 %in% var3modSustituye_8 && input$medida3_2 %in% var3modSustituye_8 && input$medida3_3 %in% var3modSustituye_8) ||
-      (input$medida3_1 %in% var3modSustituye_9 && input$medida3_2 %in% var3modSustituye_9 && input$medida3_3 %in% var3modSustituye_9)
+    matches_any_model(get_measure_inputs(input, 3), var3modSustituye[1:9])
   })
   outputOptions(output, "modelosSusVar3_1", suspendWhenHidden = FALSE)
-  
+
   output$modelosSusVar3_2 <- reactive({
-    (input$medida3_1 %in% var3modSustituye_10 && input$medida3_2 %in% var3modSustituye_10 && input$medida3_3 %in% var3modSustituye_10) ||
-      (input$medida3_1 %in% var3modSustituye_11 && input$medida3_2 %in% var3modSustituye_11 && input$medida3_3 %in% var3modSustituye_11) ||
-      (input$medida3_1 %in% var3modSustituye_12 && input$medida3_2 %in% var3modSustituye_12 && input$medida3_3 %in% var3modSustituye_12) ||
-      (input$medida3_1 %in% var3modSustituye_13 && input$medida3_2 %in% var3modSustituye_13 && input$medida3_3 %in% var3modSustituye_13) ||
-      (input$medida3_1 %in% var3modSustituye_14 && input$medida3_2 %in% var3modSustituye_14 && input$medida3_3 %in% var3modSustituye_14) ||
-      (input$medida3_1 %in% var3modSustituye_15 && input$medida3_2 %in% var3modSustituye_15 && input$medida3_3 %in% var3modSustituye_15)
+    matches_any_model(get_measure_inputs(input, 3), var3modSustituye[10:15])
   })
   outputOptions(output, "modelosSusVar3_2", suspendWhenHidden = FALSE)
-  
+
   #//////////////////////////////////////// variable: 4 ////////////////////////////////////////
   output$modelosAgVar4 <- reactive({
-    (input$medida4_1 %in% var4modAgrega_1 && input$medida4_2 %in% var4modAgrega_1 && input$medida4_3 %in% var4modAgrega_1 && input$medida4_4 %in% var4modAgrega_1) ||
-      (input$medida4_1 %in% var4modAgrega_2 && input$medida4_2 %in% var4modAgrega_2 && input$medida4_3 %in% var4modAgrega_2 && input$medida4_4 %in% var4modAgrega_2)
+    matches_any_model(get_measure_inputs(input, 4), var4modAgrega)
   })
   outputOptions(output, "modelosAgVar4", suspendWhenHidden = FALSE)
-  
+
   output$modelosSusVar4_1 <- reactive({
-    (input$medida4_1 %in% var4modSustituye_1 && input$medida4_2 %in% var4modSustituye_1 && input$medida4_3 %in% var4modSustituye_1 && input$medida4_4 %in% var4modSustituye_1) ||
-      (input$medida4_1 %in% var4modSustituye_2 && input$medida4_2 %in% var4modSustituye_2 && input$medida4_3 %in% var4modSustituye_2 && input$medida4_4 %in% var4modSustituye_2) ||
-      (input$medida4_1 %in% var4modSustituye_3 && input$medida4_2 %in% var4modSustituye_3 && input$medida4_3 %in% var4modSustituye_3 && input$medida4_4 %in% var4modSustituye_3) ||
-      (input$medida4_1 %in% var4modSustituye_4 && input$medida4_2 %in% var4modSustituye_4 && input$medida4_3 %in% var4modSustituye_4 && input$medida4_4 %in% var4modSustituye_4) ||
-      (input$medida4_1 %in% var4modSustituye_5 && input$medida4_2 %in% var4modSustituye_5 && input$medida4_3 %in% var4modSustituye_5 && input$medida4_4 %in% var4modSustituye_5) ||
-      (input$medida4_1 %in% var4modSustituye_6 && input$medida4_2 %in% var4modSustituye_6 && input$medida4_3 %in% var4modSustituye_6 && input$medida4_4 %in% var4modSustituye_6) ||
-      (input$medida4_1 %in% var4modSustituye_7 && input$medida4_2 %in% var4modSustituye_7 && input$medida4_3 %in% var4modSustituye_7 && input$medida4_4 %in% var4modSustituye_7) ||
-      (input$medida4_1 %in% var4modSustituye_8 && input$medida4_2 %in% var4modSustituye_8 && input$medida4_3 %in% var4modSustituye_8 && input$medida4_4 %in% var4modSustituye_8) 
+    matches_any_model(get_measure_inputs(input, 4), var4modSustituye[1:8])
   })
   outputOptions(output, "modelosSusVar4_1", suspendWhenHidden = FALSE)
-  
+
   output$modelosSusVar4_2 <- reactive({
-    (input$medida4_1 %in% var4modSustituye_9 && input$medida4_2 %in% var4modSustituye_9 && input$medida4_3 %in% var4modSustituye_9 && input$medida4_4 %in% var4modSustituye_9) ||
-      (input$medida4_1 %in% var4modSustituye_10 && input$medida4_2 %in% var4modSustituye_10 && input$medida4_3 %in% var4modSustituye_10 && input$medida4_4 %in% var4modSustituye_10) ||
-      (input$medida4_1 %in% var4modSustituye_11 && input$medida4_2 %in% var4modSustituye_11 && input$medida4_3 %in% var4modSustituye_11 && input$medida4_4 %in% var4modSustituye_11) ||
-      (input$medida4_1 %in% var4modSustituye_12 && input$medida4_2 %in% var4modSustituye_12 && input$medida4_3 %in% var4modSustituye_12 && input$medida4_4 %in% var4modSustituye_12) ||
-      (input$medida4_1 %in% var4modSustituye_13 && input$medida4_2 %in% var4modSustituye_13 && input$medida4_3 %in% var4modSustituye_13 && input$medida4_4 %in% var4modSustituye_13)
+    matches_any_model(get_measure_inputs(input, 4), var4modSustituye[9:13])
   })
   outputOptions(output, "modelosSusVar4_2", suspendWhenHidden = FALSE)
-  
+
   #//////////////////////////////////////// variable: 5 ////////////////////////////////////////
   output$modelosAgVar5 <- reactive({
-    (input$medida5_1 %in% var5modAgrega_1 && input$medida5_2 %in% var5modAgrega_1 && input$medida5_3 %in% var5modAgrega_1 && input$medida5_4 %in% var5modAgrega_1 && input$medida5_5 %in% var5modAgrega_1)
+    matches_any_model(get_measure_inputs(input, 5), var5modAgrega)
   })
   outputOptions(output, "modelosAgVar5", suspendWhenHidden = FALSE)
-  
+
   output$modelosSusVar5 <- reactive({
-    (input$medida5_1 %in% var5modSustituye_1 && input$medida5_2 %in% var5modSustituye_1 && input$medida5_3 %in% var5modSustituye_1 && input$medida5_4 %in% var5modSustituye_1 && input$medida5_5 %in% var5modSustituye_1) ||
-      (input$medida5_1 %in% var5modSustituye_2 && input$medida5_2 %in% var5modSustituye_2 && input$medida5_3 %in% var5modSustituye_2 && input$medida5_4 %in% var5modSustituye_2 && input$medida5_5 %in% var5modSustituye_2) ||
-      (input$medida5_1 %in% var5modSustituye_3 && input$medida5_2 %in% var5modSustituye_3 && input$medida5_3 %in% var5modSustituye_3 && input$medida5_4 %in% var5modSustituye_3 && input$medida5_5 %in% var5modSustituye_3) ||
-      (input$medida5_1 %in% var5modSustituye_4 && input$medida5_2 %in% var5modSustituye_4 && input$medida5_3 %in% var5modSustituye_4 && input$medida5_4 %in% var5modSustituye_4 && input$medida5_5 %in% var5modSustituye_4) ||
-      (input$medida5_1 %in% var5modSustituye_5 && input$medida5_2 %in% var5modSustituye_5 && input$medida5_3 %in% var5modSustituye_5 && input$medida5_4 %in% var5modSustituye_5 && input$medida5_5 %in% var5modSustituye_5)
+    matches_any_model(get_measure_inputs(input, 5), var5modSustituye)
   })
   outputOptions(output, "modelosSusVar5", suspendWhenHidden = FALSE)
-  
+
   Medidas <- reactive({
-    if(input$numMed==2){
-      medidas = list(med1=input$medida2_1, med2=input$medida2_2)
-    }else if(input$numMed==3){
-      medidas = list(med1=input$medida3_1, med2=input$medida3_2, med3=input$medida3_3)
-    }else if(input$numMed==4){
-      medidas = list(med1=input$medida4_1, med2=input$medida4_2, med3=input$medida4_3, med4=input$medida4_4)
-    }else if(input$numMed==5){
-      medidas = list(med1=input$medida5_1, med2=input$medida5_2, med3=input$medida5_3, med4=input$medida5_4, med5=input$medida5_5)
-    }
+    req(input$numMed)
+    selected_measures <- get_measure_inputs(input, input$numMed)
+    setNames(as.list(selected_measures), paste0("med", seq_along(selected_measures)))
   })
-  
+
   Valores <- reactive({
-    if(input$numMed==2){
-      valores = list(val1=input$val2Med1, val2=input$val2Med2)
-    }else if(input$numMed==3){
-      valores = list(val1=input$val3Med1, val2=input$val3Med2, val3=input$val3Med3)
-    }else if(input$numMed==4){
-      valores = list(val1=input$val4Med1, val2=input$val4Med2, val3=input$val4Med3, val4=input$val4Med4)
-    }else if(input$numMed==5){
-      valores = list(val1=input$val5Med1, val2=input$val5Med2, val3=input$val5Med3, val4=input$val5Med4, val5=input$val5Med5)
-    }
+    req(input$numMed)
+    selected_values <- get_value_inputs(input, input$numMed)
+    setNames(selected_values, paste0("val", seq_along(selected_values)))
   })
-  
-  
+
   # M O D E L O S ------------------------------------------------------------------------------------------------
   url <- "https://docs.google.com/spreadsheets/d/1vOGE2_5Br9qpQYt4sw8rkxHWuvq_Bb66u__UgQHwGrI/export?format=csv&gid=739303745"
   Datos <- read.csv(url)
