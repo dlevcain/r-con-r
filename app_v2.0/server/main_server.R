@@ -1,35 +1,22 @@
-# ==============================================================================
-# main_server.R
-# Main Server Logic and Application Control
-# ==============================================================================
 
 
 
-# ==============================================================================
-# Main server function
-# ==============================================================================
 server = function(input, output,session) {
   
   
   
-  # ============================================================================
-  # Data loading
-  # ============================================================================
   dir<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vQcDy5itj04-k_s_fxeS5XN_Y8b2w5TGqIJ3vU39vGGkNW1JF7BXFLDBE_GPGdDzw/pub?gid=152731684&single=true&output=csv"
   datag <- as.data.frame(read_csv(dir))
   datag[,4:15]<-datag[,4:15]/100
+
+  app_colors <- list(
+    sex = c("#9AC0CD", "#FFAEB9"),
+    classified = c("green3", "red3"),
+    box_fill = c("#B2DFEE", "#FFB6C1"),
+    box_border = c("#68838B", "#8B5F65")
+  )
+
   
-  
-  # ============================================================
-  # Global values / constants
-  # ============================================================
-  medidas <- list()
-  valores <- list()
-  
-  
-  # ============================================================
-  # Base reactives (raw reactives)
-  # ============================================================
   filtro <- reactive({
     req(input$zona)
     if (input$zona == "Maxilar") {
@@ -41,38 +28,20 @@ server = function(input, output,session) {
   
   
   
-  # ============================================================
-  # Derived reactives (transformed data)
-  # ============================================================
   
   
-  # ============================================================
-  # Filters / selectors logic
-  # ============================================================
   
   
-  # ============================================================
-  # Outputs - Tables
-  # ============================================================
   output$tabla <- renderTable({
     filtro()
   })
   
   
   
-  # ============================================================
-  # Outputs - Plots
-  # ============================================================
   
   
-  # ============================================================
-  # Outputs - UI elements
-  # ============================================================
   
   
-  # ============================================================
-  # Observers
-  # ============================================================
   observeEvent(input$btn_img3, {
     showModal(
       modalDialog(
@@ -103,24 +72,13 @@ server = function(input, output,session) {
   
   
   
-  # ============================================================
-  # UI logic / navigation
-  # ============================================================
   pageButtonServer("page", parentSession = session)
   
-  # ============================================================
-  # Module calls
-  # ============================================================
   
   
-  # ============================================================
-  # Helpers / internal functions
-  # ============================================================
   
   
-  # ============================================================
   # Debug / logs
-  # ============================================================
   
 
   
@@ -310,7 +268,6 @@ server = function(input, output,session) {
   var2modSustituye_5 <- c("MD.MaxL","MD.ManR")
   var2modSustituye_6 <- c("MD.ManR","MD.ManL")
   var2modSustituye_7 <- c("MD.MaxR","MD.ManL")
-  #-------------------------------------------------------------------------------
   var3mod_1 <- c("MD.MaxR", "IC.Man", "MD.ManL")
   var3modAgrega_1 <- c("IC.Max", "IC.Man", "MD.ManR")
   var3modAgrega_2 <- c("IC.Max", "IC.Man", "MD.ManL")
@@ -331,7 +288,6 @@ server = function(input, output,session) {
   var3modSustituye_13 <- c("IC.Max", "MD.MaxL", "MD.ManR")
   var3modSustituye_14 <- c("IC.Max", "MD.MaxR", "MD.ManL")
   var3modSustituye_15 <- c("IC.Max", "MD.ManR", "MD.ManL")
-  #-------------------------------------------------------------------------------
   var4modAgrega_1 <- c("MD.MaxR", "MD.MaxL", "IC.Man", "MD.ManR")
   var4modAgrega_2 <- c("IC.Max", "MD.MaxR", "MD.MaxL", "MD.ManL")
   var4modSustituye_1 <- c("IC.Max", "MD.MaxR", "MD.MaxL", "IC.Man")
@@ -347,7 +303,6 @@ server = function(input, output,session) {
   var4modSustituye_11 <- c("MD.MaxR", "MD.MaxL", "MD.ManR", "MD.ManL")
   var4modSustituye_12 <- c("IC.Max", "IC.Man", "MD.ManR", "MD.ManL")
   var4modSustituye_13 <- c("IC.Max", "MD.MaxL", "IC.Man", "MD.ManR")
-  #-------------------------------------------------------------------------------
   var5modAgrega_1 <- c("IC.Max", "MD.MaxR", "MD.MaxL", "IC.Man", "MD.ManR")
   var5modSustituye_1 <- c("IC.Max", "MD.MaxL", "IC.Man", "MD.ManR", "MD.ManL")
   var5modSustituye_2 <- c("IC.Max", "MD.MaxR", "MD.MaxL", "IC.Man", "MD.ManL")
@@ -356,7 +311,6 @@ server = function(input, output,session) {
   var5modSustituye_5 <- c("IC.Max", "MD.MaxR", "MD.MaxL", "MD.ManL", "MD.ManR")
   
   
-  #//////////////////////////////////////// variable: 2 //////////////////////////////////////// 
   output$modelosVar2 <- reactive({
     (input$medida2_1 %in% var2mod_1 && input$medida2_2 %in% var2mod_1) ||
       (input$medida2_1 %in% var2mod_2 && input$medida2_2 %in% var2mod_2) ||
@@ -384,7 +338,6 @@ server = function(input, output,session) {
   })
   outputOptions(output, "modelosSusVar2", suspendWhenHidden = FALSE)
   
-  #//////////////////////////////////////// variable: 3 ////////////////////////////////////////
   output$modelosVar3 <- reactive({
     input$medida3_1 %in% var3mod_1 && input$medida3_2 %in% var3mod_1 && input$medida3_3 %in% var3mod_1
   })
@@ -421,7 +374,6 @@ server = function(input, output,session) {
   })
   outputOptions(output, "modelosSusVar3_2", suspendWhenHidden = FALSE)
   
-  #//////////////////////////////////////// variable: 4 ////////////////////////////////////////
   output$modelosAgVar4 <- reactive({
     (input$medida4_1 %in% var4modAgrega_1 && input$medida4_2 %in% var4modAgrega_1 && input$medida4_3 %in% var4modAgrega_1 && input$medida4_4 %in% var4modAgrega_1) ||
       (input$medida4_1 %in% var4modAgrega_2 && input$medida4_2 %in% var4modAgrega_2 && input$medida4_3 %in% var4modAgrega_2 && input$medida4_4 %in% var4modAgrega_2)
@@ -449,7 +401,6 @@ server = function(input, output,session) {
   })
   outputOptions(output, "modelosSusVar4_2", suspendWhenHidden = FALSE)
   
-  #//////////////////////////////////////// variable: 5 ////////////////////////////////////////
   output$modelosAgVar5 <- reactive({
     (input$medida5_1 %in% var5modAgrega_1 && input$medida5_2 %in% var5modAgrega_1 && input$medida5_3 %in% var5modAgrega_1 && input$medida5_4 %in% var5modAgrega_1 && input$medida5_5 %in% var5modAgrega_1)
   })
@@ -489,7 +440,6 @@ server = function(input, output,session) {
   })
   
   
-  # M O D E L O S ------------------------------------------------------------------------------------------------
   url <- "https://docs.google.com/spreadsheets/d/1vOGE2_5Br9qpQYt4sw8rkxHWuvq_Bb66u__UgQHwGrI/export?format=csv&gid=739303745"
   Datos <- read.csv(url)
   
@@ -497,9 +447,7 @@ server = function(input, output,session) {
   Datos$Sex <- as.factor(Datos$Sex)
   
   ##############################################################################################
-  ######################################## M O D E L O #########################################
   ##############################################################################################
-  #//////////////////////////////////////// variable: 1 ////////////////////////////////////////
   #-------------------------------------------IC.MAX--------------------------------------------
   log_ICMax = glm(Sex ~ IC.Max, data = Datos, family = binomial)
   #-------------------------------------------MD.MAXR-------------------------------------------
@@ -510,7 +458,6 @@ server = function(input, output,session) {
   log_MDManR = glm(Sex ~ MD.ManR, data = Datos, family = binomial)
   #-------------------------------------------MD.MANL-------------------------------------------
   log_MDManL = glm(Sex ~ MD.ManL, data = Datos, family = binomial)
-  #//////////////////////////////////////// variable: 2 ////////////////////////////////////////
   #-------------------------------------- MD.MaxR + IC.Man -------------------------------------
   log2var_1 = glm(Sex ~ MD.MaxR + IC.Man, data = Datos, family = binomial)
   #------------------------------------- MD.MaxR + MD.ManR -------------------------------------
@@ -527,7 +474,6 @@ server = function(input, output,session) {
   log2var_7 = glm(Sex ~ IC.Max + MD.ManR, data = Datos, family = binomial)
   #-------------------------------------- IC.MAX + MD.ManL -------------------------------------
   log2var_8 = glm(Sex ~ IC.Max + MD.ManL, data = Datos, family = binomial)
-  #//////////////////////////////////////// variable: 3 ////////////////////////////////////////
   #--------------------------------- MD.MaxR + IC.Man + MD.ManL --------------------------------
   log3var_1 = glm(Sex ~ MD.MaxR + IC.Man + MD.ManL, data = Datos, family = binomial)
   #--------------------------------- IC.Max + IC.Man + MD.ManR ---------------------------------
@@ -538,15 +484,12 @@ server = function(input, output,session) {
   log3var_4 = glm(Sex ~ MD.MaxR + MD.MaxL + MD.ManL, data = Datos, family = binomial)
   #-------------------------------- MD.MaxR + MD.ManR + MD.ManL --------------------------------
   log3var_5 = glm(Sex ~ MD.MaxR + MD.ManR + MD.ManL, data = Datos, family = binomial)
-  #//////////////////////////////////////// variable: 4 ////////////////////////////////////////
   #---------------------------- MD.MaxR + MD.MaxL + IC.Man + MD.ManR ---------------------------
   log4var_1 = glm(Sex ~ MD.MaxR + MD.MaxL + IC.Man + MD.ManR, data = Datos, family = binomial)
   #---------------------------- IC.Max + MD.MaxR + MD.MaxL + MD.ManL ---------------------------
   log4var_2 = glm(Sex ~ IC.Max + MD.MaxR + MD.MaxL + MD.ManL, data = Datos, family = binomial)
-  #//////////////////////////////////////// variable: 5 ////////////////////////////////////////
   #----------------------- IC.Max + MD.MaxR + MD.MaxL + IC.Man + MD.ManR -----------------------
   log5var = glm(Sex ~ IC.Max + MD.MaxR + MD.MaxL + IC.Man + MD.ManR, data = Datos, family = binomial)
-  #//////////////////////////////////////// variable: 6 ////////////////////////////////////////
   #------------------ IC.Max + MD.MaxR + MD.MaxL + IC.Man + MD.ManR + MD.ManL ------------------
   log6var = glm(Sex ~ IC.Max + MD.MaxR + MD.MaxL + IC.Man + MD.ManR + MD.ManL, data = Datos, family = binomial)
   
@@ -554,7 +497,6 @@ server = function(input, output,session) {
   ##############################################################################################
   ################################# C L A S I F I C A C I O N ##################################
   ##############################################################################################
-  #//////////////////////////////////////// variable: 1 ////////////////////////////////////////
   #-------------------------------------------IC.MAX--------------------------------------------
   Datos$Sex_Estimado_ICMax <- as.numeric(log_ICMax$fitted.values>=0.5)
   Datos$Sex_Estimado_ICMax <-factor(Datos$Sex_Estimado_ICMax, labels=levels(Datos$Sex))
@@ -592,7 +534,6 @@ server = function(input, output,session) {
   Datos$Classified_MDManL[Datos$Classified_MDManL == 1] <- 'correctly'
   Datos$Prediction_MDManL <- 1-log_MDManL$fitted.values
   levels(Datos$Sex_Estimado_MDManL) <- c("Male", "Female")
-  #//////////////////////////////////////// variable: 2 ////////////////////////////////////////
   #-------------------------------------- MD.MaxR + IC.Man -------------------------------------
   Datos$Sex_Estimado_2_1 <- as.numeric(log2var_1$fitted.values>=0.5)
   Datos$Sex_Estimado_2_1 <-factor(Datos$Sex_Estimado_2_1, labels=levels(Datos$Sex))
@@ -656,7 +597,6 @@ server = function(input, output,session) {
   Datos$Classified_2_8[Datos$Classified_2_8 == 1] <- 'correctly'
   Datos$Prediction_2_8 <- 1-log2var_8$fitted.values
   levels(Datos$Sex_Estimado_2_8) <- c("Male", "Female")
-  #//////////////////////////////////////// variable: 3 ////////////////////////////////////////
   #--------------------------------- MD.MaxR + IC.Man + MD.ManL --------------------------------
   Datos$Sex_Estimado_3_1 <- as.numeric(log3var_1$fitted.values>=0.5)
   Datos$Sex_Estimado_3_1 <-factor(Datos$Sex_Estimado_3_1, labels=levels(Datos$Sex))
@@ -681,7 +621,6 @@ server = function(input, output,session) {
   Datos$Sex_Estimado_3_5 <-factor(Datos$Sex_Estimado_3_5, labels=levels(Datos$Sex))
   Datos$Prediction_3_5 <- 1-log3var_5$fitted.values
   levels(Datos$Sex_Estimado_3_5) <- c("Male", "Female")
-  #//////////////////////////////////////// variable: 4 ////////////////////////////////////////
   #---------------------------- MD.MaxR + MD.MaxL + IC.Man + MD.ManR ---------------------------
   Datos$Sex_Estimado_4_1 <- as.numeric(log4var_1$fitted.values>=0.5)
   Datos$Sex_Estimado_4_1 <-factor(Datos$Sex_Estimado_4_1, labels=levels(Datos$Sex))
@@ -690,12 +629,10 @@ server = function(input, output,session) {
   Datos$Sex_Estimado_4_2 <- as.numeric(log4var_2$fitted.values>=0.5)
   Datos$Sex_Estimado_4_2 <-factor(Datos$Sex_Estimado_4_2, labels=levels(Datos$Sex))
   levels(Datos$Sex_Estimado_4_2) <- c("Male", "Female")
-  #//////////////////////////////////////// variable: 5 ////////////////////////////////////////
   #----------------------- IC.Max + MD.MaxR + MD.MaxL + IC.Man + MD.ManR -----------------------
   Datos$Sex_Estimado_5_1 <- as.numeric(log5var$fitted.values>=0.5)
   Datos$Sex_Estimado_5_1 <-factor(Datos$Sex_Estimado_5_1, labels=levels(Datos$Sex))
   levels(Datos$Sex_Estimado_5_1) <- c("Male", "Female")
-  #//////////////////////////////////////// variable: 6 ////////////////////////////////////////
   #------------------ IC.Max + MD.MaxR + MD.MaxL + IC.Man + MD.ManR + MD.ManL ------------------
   Datos$Sex_Estimado_6_1 <- as.numeric(log6var$fitted.values>=0.5)
   Datos$Sex_Estimado_6_1 <-factor(Datos$Sex_Estimado_6_1, labels=levels(Datos$Sex))
@@ -705,13 +642,11 @@ server = function(input, output,session) {
   levels(Datos$Sex) <- c("Male", "Female")
   
   
-  # R E S U L T S ------------------------------------------------------------------------------------------------
   observeEvent(input$resultado, {
     updateTabsetPanel(session, "inTabset",
                       selected = "Resultados")
   })
   
-  #//////////////////////////////////////// variable: 1 ////////////////////////////////////////
   output$resultsText1_1_1 <- renderUI({
     text1 <- "With a logistic model, considering only the variable "
     text2 <- ", the estimate sex is "
@@ -790,9 +725,9 @@ server = function(input, output,session) {
   })
   
   output$resultsPlots1_1_1 <- renderPlotly({
-    colorBxF <- c("#B2DFEE","#FFB6C1")
-    colorBxC <- c("#68838B", "#8B5F65")
-    colorManual <- c("green3","red3")
+    colorBxF <- app_colors$box_fill
+    colorBxC <- app_colors$box_border
+    colorManual <- app_colors$classified
     
     switch(input$medida,
            "IC.Max" = ggplot(Datos, aes(x=Sex, y=IC.Max, col=Classified_ICMax)) +
@@ -814,8 +749,8 @@ server = function(input, output,session) {
   })
   
   output$resultsPlots1_1_2 <- renderPlotly({
-    colorSex <- c("#9AC0CD","#FFAEB9")
-    colorManual <- c("green3","red3")
+    colorSex <- app_colors$sex
+    colorManual <- app_colors$classified
     
     switch(input$medida,
            "IC.Max" = ggplot()+
@@ -841,9 +776,7 @@ server = function(input, output,session) {
     )
   })
   
-  #//////////////////////////////////////// variable: 2 ////////////////////////////////////////
   
-  #------------------------------ M O D E L O S      B U E N O S -------------------------------
   output$resultsText2_1_1 <- renderUI({
     medidas <- Medidas()
     valores <- Valores()
@@ -931,7 +864,7 @@ server = function(input, output,session) {
   output$resultsPlots2_1_1 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     colorClass <- c("green3","red3")
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var2mod_1))){
@@ -970,7 +903,7 @@ server = function(input, output,session) {
   output$resultsPlots2_1_2 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     colorClass <- c("green3","red3")
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var2mod_1))){
@@ -1009,7 +942,7 @@ server = function(input, output,session) {
   output$resultsPlots2_1_3 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     colorClass <- c("green3","red3")
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var2mod_1))){
@@ -1048,7 +981,7 @@ server = function(input, output,session) {
   output$resultsPlots2_1_4 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     colorClass <- c("green3","red3")
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var2mod_1))){
@@ -1085,7 +1018,6 @@ server = function(input, output,session) {
   })
   
   
-  #---------------------- M O D E L O S      C O N      A G R E G A D O S ----------------------
   output$resultsText2_2_1 <- renderUI({
     medidas <- Medidas()
     valores <- Valores()
@@ -1146,7 +1078,7 @@ server = function(input, output,session) {
   output$resultsPlots2_2_1 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var2modAgrega_1))){
       ggplot(Datos, aes(x=Sex, y=log2var_6$fitted.values, fill=Sex))+
@@ -1207,8 +1139,8 @@ server = function(input, output,session) {
   output$resultsPlots2_2_2 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
-    colorManual <- c("green3","red3")
+    colorSex <- app_colors$sex
+    colorManual <- app_colors$classified
     
     if("MD.MaxL" %in% medidas){
       ggplot()+
@@ -1229,7 +1161,6 @@ server = function(input, output,session) {
   })
   
   
-  #------------------------- M O D E L O S      S U S T I T U I D O S --------------------------
   output$resultsText2_3_1 <- renderUI({
     medidas <- Medidas()
     valores <- Valores()
@@ -1292,8 +1223,8 @@ server = function(input, output,session) {
   output$resultsPlots2_3_1 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
-    colorManual <- c("green3","red3")
+    colorSex <- app_colors$sex
+    colorManual <- app_colors$classified
     
     if("IC.Max" %in% medidas){
       ggplot()+
@@ -1314,9 +1245,7 @@ server = function(input, output,session) {
   })
   
   
-  #//////////////////////////////////////// variable: 3 ////////////////////////////////////////
   
-  #-------------------------------- M O D E L O      B U E N O ---------------------------------
   output$resultsText3_1_1 <- renderUI({
     medidas <- Medidas()
     valores <- Valores()
@@ -1343,7 +1272,7 @@ server = function(input, output,session) {
   })
   
   output$resultsPlots3_1_1 <- renderPlotly({
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     ggplot(Datos, aes(x=Sex, y=log3var_1$fitted.values, fill=Sex))+
       geom_violin()+
@@ -1362,7 +1291,6 @@ server = function(input, output,session) {
       theme(legend.position = c(0.2,0.5))
   })
   
-  #---------------------- M O D E L O S      C O N      A G R E G A D O S ----------------------
   output$resultsText3_2_1 <- renderUI({
     medidas <- Medidas()
     valores <- Valores()
@@ -1437,7 +1365,7 @@ server = function(input, output,session) {
   output$resultsPlots3_2_1 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var3modAgrega_1))){
       ggplot(Datos, aes(x=Sex, y=log3var_2$fitted.values, fill=Sex))+
@@ -1512,7 +1440,7 @@ server = function(input, output,session) {
   output$resultsPlots3_2_2 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var3modAgrega_1))){
       ggplot(Datos, aes(x=Sex, y=log2var_4$fitted.values, fill=Sex))+
@@ -1537,7 +1465,6 @@ server = function(input, output,session) {
     }
   })
   
-  #------------------------- M O D E L O S      S U S T I T U I D O S --------------------------
   output$resultsText3_3_1 <- renderUI({
     medidas <- Medidas()
     valores <- Valores()
@@ -1630,7 +1557,7 @@ server = function(input, output,session) {
   output$resultsPlots3_3_1 <- renderUI({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var3modSustituye_1)) || all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var3modSustituye_2))){
       ggplot(Datos, aes(x=Sex, y=log2var_1$fitted.values, fill=Sex))+
@@ -1858,8 +1785,6 @@ server = function(input, output,session) {
   })
   
   
-  #//////////////////////////////////////// variable: 4 ////////////////////////////////////////
-  #---------------------- M O D E L O S      C O N      A G R E G A D O S ----------------------
   output$resultsText4_2_1 <- renderUI({
     medidas <- Medidas()
     valores <- Valores()
@@ -1905,7 +1830,7 @@ server = function(input, output,session) {
   output$resultsPlots4_2_1 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var4modAgrega_1))){
       ggplot(Datos, aes(x=Sex, y=log4var_1$fitted.values, fill=Sex))+
@@ -1952,7 +1877,7 @@ server = function(input, output,session) {
   output$resultsPlots4_2_2 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var4modAgrega_1))){
       ggplot(Datos, aes(x=Sex, y=log2var_2$fitted.values, fill=Sex))+
@@ -1999,7 +1924,7 @@ server = function(input, output,session) {
   output$resultsPlots4_2_3 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var4modAgrega_1))){
       ggplot(Datos, aes(x=Sex, y=log2var_1$fitted.values, fill=Sex))+
@@ -2015,7 +1940,6 @@ server = function(input, output,session) {
   })
   
   
-  #------------------------- M O D E L O S      S U S T I T U I D O S --------------------------
   output$resultsText4_3_1 <- renderUI({
     medidas <- Medidas()
     valores <- Valores()
@@ -2093,7 +2017,7 @@ server = function(input, output,session) {
   output$resultsPlots4_3_1 <- renderUI({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var4modSustituye_1))){
       ggplot(Datos, aes(x=Sex, y=log2var_1$fitted.values, fill=Sex))+
@@ -2364,8 +2288,6 @@ server = function(input, output,session) {
   })
   
   
-  #//////////////////////////////////////// variable: 5 ////////////////////////////////////////
-  #----------------------- M O D E L O      C O N      A G R E G A D O S -----------------------
   output$resultsText5_2_1 <- renderUI({
     medidas <- Medidas()
     valores <- Valores()
@@ -2396,7 +2318,7 @@ server = function(input, output,session) {
   output$resultsPlots5_2_1 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     ggplot(Datos, aes(x=Sex, y=log5var$fitted.values, fill=Sex))+
       geom_violin()+
@@ -2425,7 +2347,7 @@ server = function(input, output,session) {
   output$resultsPlots5_2_2 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     ggplot(Datos, aes(x=Sex, y=log2var_2$fitted.values, fill=Sex))+
       geom_violin()+
@@ -2454,7 +2376,7 @@ server = function(input, output,session) {
   output$resultsPlots5_2_3 <- renderPlotly({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     ggplot(Datos, aes(x=Sex, y=log2var_1$fitted.values, fill=Sex))+
       geom_violin()+
@@ -2463,7 +2385,6 @@ server = function(input, output,session) {
   })
   
   
-  #------------------------- M O D E L O S      S U S T I T U I D O S --------------------------  
   output$resultsText5_3_1 <- renderUI({
     medidas <- Medidas()
     valores <- Valores()
@@ -2526,7 +2447,7 @@ server = function(input, output,session) {
   output$resultsPlots5_3_1 <- renderUI({
     medidas <- Medidas()
     
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     if(all(medidas[order(unlist(medidas),decreasing=FALSE)] == sort(var5modSustituye_1))){
       ggplot(Datos, aes(x=Sex, y=log2var_3$fitted.values, fill=Sex))+
@@ -2575,8 +2496,6 @@ server = function(input, output,session) {
     }
   })
   
-  #//////////////////////////////////////// variable: 6 ////////////////////////////////////////
-  #---------------------------------------- M O D E L O ----------------------------------------
   output$resultsText6_1_1 <- renderUI({
     text1 <- "With a logistic model, considering your input variables, the estimate sex is "
     text2 <- " with a probability of "
@@ -2599,7 +2518,7 @@ server = function(input, output,session) {
   })
   
   output$resultsPlots6_1_1 <- renderPlotly({
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     ggplot(Datos, aes(x=Sex, y=log6var$fitted.values, fill=Sex))+
       geom_violin()+
@@ -2620,7 +2539,6 @@ server = function(input, output,session) {
   
   
   
-  #---------------------------- M O D E L O S      A G R E G A D O S ---------------------------
   output$resultsText6_1_2 <- renderUI({
     text1 <- "Considering the 23's and 33's mesiodistal width, with this model the estimate sex is "
     text2 <- " with a probability of "
@@ -2643,7 +2561,7 @@ server = function(input, output,session) {
   })
   
   output$resultsPlots6_1_3 <- renderPlotly({
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     ggplot(Datos, aes(x=Sex, y=log2var_3$fitted.values, fill=Sex))+
       geom_violin()+
@@ -2685,7 +2603,7 @@ server = function(input, output,session) {
   })
   
   output$resultsPlots6_1_4 <- renderPlotly({
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     ggplot(Datos, aes(x=Sex, y=log3var_1$fitted.values, fill=Sex))+
       geom_violin()+
@@ -2727,7 +2645,7 @@ server = function(input, output,session) {
   })
   
   output$resultsPlots6_1_5 <- renderPlotly({
-    colorSex <- c("#9AC0CD","#FFAEB9")
+    colorSex <- app_colors$sex
     
     ggplot(Datos, aes(x=Sex, y=log2var_1$fitted.values, fill=Sex))+
       geom_violin()+
@@ -2747,4 +2665,3 @@ server = function(input, output,session) {
   })
   
 }
-# ============================================================

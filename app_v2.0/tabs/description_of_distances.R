@@ -1,7 +1,3 @@
-# ============================================================
-# Description of Distances Module
-# UI definition
-# ============================================================
 
 description_of_distances_ui <- function(id){
   ns <- NS(id)

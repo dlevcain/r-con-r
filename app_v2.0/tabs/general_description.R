@@ -1,7 +1,3 @@
-# ============================================================
-# General Description Module
-# UI definition
-# ============================================================
 
 general_description_ui <- function(id){
   ns <- NS(id)

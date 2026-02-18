@@ -1,7 +1,3 @@
-# ============================================================
-# Reference Sample Module
-# UI definition
-# ============================================================
 
 reference_sample_ui <- function(id){
   ns <- NS(id)

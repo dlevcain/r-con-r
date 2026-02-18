@@ -1,9 +1,4 @@
-# ============================================================
-# main_ui.R
-# Main UI layout and application composition
-# ============================================================
 
-# --- Module imports -----------------------------------------
 source("tabs/home.R")
 source("tabs/reference_sample.R")
 source("tabs/general_description.R")
@@ -12,14 +7,12 @@ source("tabs/sex_estimation.R")
 source("tabs/results.R")
 
 
-# --- UI helpers / components --------------------------------
 
 pageButtonUi <- function(id, label = "Resultado") {
   ns <- NS(id)
   actionButton(ns("page_change"), label = label)
 }
 
-# --- Main UI -------------------------------------------------
 pageButtonServer <- function(id, parentSession){
   moduleServer(id, function(input, output, session){
     observeEvent(input$page_change,{
@@ -33,10 +26,8 @@ pageButtonServer <- function(id, parentSession){
 
 ui <- fluidPage(
   
-  # Global JS infrastructure
   shinyjs::useShinyjs(),
   
-  # Main navigation structure
   navbarPage(
     title = "Intercanine Distance",
     theme = shinytheme("flatly"),
@@ -54,7 +45,6 @@ ui <- fluidPage(
       justify-content: center;"
     ),
     
-    # Paneles principales
     tabPanel(
       "",
       icon = icon("chart-line"),
