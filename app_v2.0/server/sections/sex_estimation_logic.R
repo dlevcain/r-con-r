@@ -1,9 +1,9 @@
   # S E X   E S T I M A T I O N ------------------------------------------------------------------------------------------------  
-  var2mod_1 <- c("MD.MaxR", "IC.Man")
-  var2mod_2 <- c("MD.MaxR", "MD.ManR")
-  var2mod_3 <- c("MD.MaxL", "MD.ManL")
-  var2mod_4 <- c("IC.Man", "MD.ManR")
-  var2mod_5 <- c("IC.Man", "MD.ManL")
+  var2mod_1 <- list("MD.MaxR", "IC.Man")
+  var2mod_2 <- list("MD.MaxR", "MD.ManR")
+  var2mod_3 <- list("MD.MaxL", "MD.ManL")
+  var2mod_4 <- list("IC.Man", "MD.ManR")
+  var2mod_5 <- list("IC.Man", "MD.ManL")
   var2modAgrega_1 <- c("IC.Max","MD.MaxL")
   var2modAgrega_2 <- c("IC.Max","MD.ManR")
   var2modAgrega_3 <- c("IC.Max","MD.ManL")
@@ -15,7 +15,7 @@
   var2modSustituye_6 <- c("MD.ManR","MD.ManL")
   var2modSustituye_7 <- c("MD.MaxR","MD.ManL")
   #-------------------------------------------------------------------------------
-  var3mod_1 <- c("MD.MaxR", "IC.Man", "MD.ManL")
+  var3mod_1 <- list("MD.MaxR", "IC.Man", "MD.ManL")
   var3modAgrega_1 <- c("IC.Max", "IC.Man", "MD.ManR")
   var3modAgrega_2 <- c("IC.Max", "IC.Man", "MD.ManL")
   var3modAgrega_3 <- c("MD.MaxR", "MD.MaxL", "MD.ManL")
@@ -62,7 +62,8 @@
   
   # Utilidades para validación de combinaciones de medidas
   matches_model_group <- function(selected_measures, model_group) {
-    all(selected_measures %in% model_group)
+    model_values <- as.character(unlist(model_group, use.names = FALSE))
+    all(selected_measures %in% model_values)
   }
 
   matches_any_model <- function(selected_measures, model_groups) {
