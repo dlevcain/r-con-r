@@ -27,7 +27,7 @@ reference_sample_ui <- function(id){
               "Maxillary" = "Maxillary",
               "Mandibular" = "Mandibular"
             ),
-            selected = ""
+            selected = "Maxillary"
           ),
           br()
         ),
