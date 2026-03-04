@@ -32,6 +32,33 @@ pageButtonServer <- function(id, parentSession){
 
 ui <- fluidPage(
 
+  tags$head(
+    tags$style(HTML("
+      .logo-fixed-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 440px;
+        background-color: #FFFFFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1040;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .logo-fixed-bar img {
+        height: 100%;
+        width: auto;
+      }
+
+      body {
+        padding-top: 460px;
+      }
+    "))
+  ),
+
   # Global JS infrastructure
   shinyjs::useShinyjs(),
 
@@ -42,16 +69,8 @@ ui <- fluidPage(
     theme = shinytheme("flatly"),
 
     header = tags$div(
-      style = "
-      position: relative;
-      width:100%;
-      height:220px;
-      background-image: url('images/Logo.png');
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;"
+      class = "logo-fixed-bar",
+      tags$img(src = "images/Logo.png", alt = "Intercanine Distance")
     ),
 
     # Paneles principales
