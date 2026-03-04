@@ -62,11 +62,36 @@
   
   
   # D E S C R I P T I O N    O F    D I S T A C E S ------------------------------------------------------------------------------------------------
+  distance_x_axis_title <- reactive({
+    zone_raw <- if (!is.null(input$zona)) input$zona else input$Zona
+    treatment_raw <- if (!is.null(input$tratamiento)) input$tratamiento else input$Tratamiento
+
+    zone_label <- dplyr::recode(
+      zone_raw,
+      "Maxilar" = "Maxillary",
+      "Mandibular" = "Mandibular",
+      .default = zone_raw
+    )
+
+    treatment_label <- dplyr::recode(
+      treatment_raw,
+      "Sin tratamiento" = "Without treatment",
+      "Con tratamiento" = "With treatment",
+      .default = treatment_raw
+    )
+
+    if (!is.null(treatment_label) && nzchar(treatment_label)) {
+      paste(zone_label, "-", treatment_label)
+    } else {
+      zone_label
+    }
+  })
+
   output$plots_IC<- renderPlotly({
     dataS =filtro()
     
     p1 <- plot_ly(dataS, x=dataS[,3], y = dataS[,4], type = "box") 
-    p1 %>% layout( xaxis = list(title =  paste(input$Zona,"-",input$Tratamiento)), yaxis = list(title = 'Distance (mm)'))
+    p1 %>% layout(xaxis = list(title = distance_x_axis_title()), yaxis = list(title = 'Distance (mm)'))
   })
   
   output$responses1 <-DT::renderDataTable(DT::datatable({{
@@ -103,7 +128,7 @@
     dataS =filtro()
     
     p1 <- plot_ly(dataS, x=dataS[,3], y = dataS[,5],fillcolor = "#A3E4D7", line = list(color = "009999"), type = "box") 
-    p1 %>% layout(xaxis = list(title =  paste(input$Zona,"-",input$Tratamiento)), yaxis = list(title = 'Mesiodistal Right (mm)'))
+    p1 %>% layout(xaxis = list(title = distance_x_axis_title()), yaxis = list(title = 'Mesiodistal Right (mm)'))
   })
   
   output$responses2 <-DT::renderDataTable(DT::datatable({{
@@ -139,7 +164,7 @@
     dataS = filtro()
     
     p1 <- plot_ly(dataS, x=dataS[,3], y = dataS[,6],fillcolor = "#E8DAEF", line = list(color = "#7D3C98"), type = "box") 
-    p1 %>% layout(xaxis = list(title = paste(input$Zona,"-",input$Tratamiento)), yaxis = list(title = 'Mesiodistal Left (mm)'))
+    p1 %>% layout(xaxis = list(title = distance_x_axis_title()), yaxis = list(title = 'Mesiodistal Left (mm)'))
   })
   
   output$responses3 <-DT::renderDataTable(DT::datatable({{
