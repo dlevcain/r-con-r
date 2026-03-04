@@ -36,25 +36,25 @@ ui <- fluidPage(
     tags$style(HTML("
       .logo-fixed-bar {
         position: fixed;
-        top: 0;
+        bottom: 0;
         left: 0;
         width: 100%;
-        height: 440px;
+        height: 88px;
         background-color: #FFFFFF;
         display: flex;
         align-items: center;
         justify-content: center;
         z-index: 1040;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
       }
 
       .logo-fixed-bar img {
-        height: 100%;
+        max-height: 80%;
         width: auto;
       }
 
       body {
-        padding-top: 460px;
+        padding-bottom: 108px;
       }
     "))
   ),
