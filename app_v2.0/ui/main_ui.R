@@ -33,6 +33,7 @@ pageButtonServer <- function(id, parentSession){
 ui <- fluidPage(
 
   tags$head(
+    tags$script(src = "js/message-handler.js"),
     tags$style(HTML("
       .logo-fixed-bar {
         position: fixed;
@@ -56,6 +57,20 @@ ui <- fluidPage(
       body {
         padding-bottom: 108px;
       }
+
+      .navbar-lang-selector {
+        margin-top: 8px;
+        margin-right: 8px;
+      }
+
+      .navbar-lang-selector .form-group {
+        margin-bottom: 0;
+      }
+
+      .navbar-lang-selector label {
+        color: #FFFFFF;
+        margin-right: 8px;
+      }
     "))
   ),
 
@@ -71,6 +86,20 @@ ui <- fluidPage(
     header = tags$div(
       class = "logo-fixed-bar",
       tags$img(src = "images/Logo.png", alt = "Intercanine Distance")
+    ),
+
+    tags$ul(
+      class = "nav navbar-nav navbar-right",
+      tags$li(
+        class = "navbar-lang-selector",
+        tags$label(`for` = "language_selector", `data-i18n` = "language_label", "Idioma"),
+        tags$select(
+          id = "language_selector",
+          class = "form-control",
+          tags$option(value = "es", "Español"),
+          tags$option(value = "en", "English")
+        )
+      )
     ),
 
     # Paneles principales
