@@ -4,7 +4,6 @@
 # ============================================================
 
 # --- Module imports -----------------------------------------
-source("tabs/home.R")
 source("tabs/reference_sample.R")
 source("tabs/general_description.R")
 source("tabs/description_of_distances.R")
@@ -32,16 +31,16 @@ pageButtonServer <- function(id, parentSession){
 
 
 ui <- fluidPage(
-  
+
   # Global JS infrastructure
   shinyjs::useShinyjs(),
-  
+
   # Main navigation structure
   navbarPage(
     id = "main_nav",
     title = "Intercanine Distance",
     theme = shinytheme("flatly"),
-    
+
     header = tags$div(
       style = "
       position: relative;
@@ -54,9 +53,8 @@ ui <- fluidPage(
       align-items: center;
       justify-content: center;"
     ),
-    
+
     # Paneles principales
-    home_ui("hm"),
     reference_sample_ui("rfrncsmpl"),
     general_description_ui("gnrldscrptn"),
     description_of_distances_ui("dscrptnfdstncs"),
