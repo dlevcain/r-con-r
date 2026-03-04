@@ -32,6 +32,25 @@ pageButtonServer <- function(id, parentSession){
 
 ui <- fluidPage(
 
+  tags$head(
+    tags$style(HTML("\
+      .logo-footer {
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 66px;
+        height: 66px;
+        background-image: url('images/Logo.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 1000;
+        pointer-events: none;
+      }
+    "))
+  ),
+
   # Global JS infrastructure
   shinyjs::useShinyjs(),
 
@@ -41,24 +60,13 @@ ui <- fluidPage(
     title = "Intercanine Distance",
     theme = shinytheme("flatly"),
 
-    header = tags$div(
-      style = "
-      position: relative;
-      width:100%;
-      height:220px;
-      background-image: url('images/Logo.png');
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;"
-    ),
-
     # Paneles principales
     reference_sample_ui("rfrncsmpl"),
     general_description_ui("gnrldscrptn"),
     description_of_distances_ui("dscrptnfdstncs"),
     sex_estimation_ui("sxstmtn"),
     results_ui("rslts")
-  )
+  ),
+
+  tags$div(class = "logo-footer")
 )
