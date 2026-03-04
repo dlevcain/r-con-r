@@ -24,7 +24,7 @@ reference_sample_ui <- function(id){
             h5(strong("Anatomical Zone")),
             choices = list(
               "",
-              "Maxillary" = "Maxilar",
+              "Maxillary" = "Maxillary",
               "Mandibular" = "Mandibular"
             ),
             selected = ""

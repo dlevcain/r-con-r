@@ -23,7 +23,7 @@ home_ui <- function(id){
             "zona",
             h5(strong("Anatomical Zone")),
             choices = list( "",
-              "Maxillary" = "Maxilar",
+              "Maxillary" = "Maxillary",
               "Mandibular" = "Mandibular"
             ),
             selected = ""

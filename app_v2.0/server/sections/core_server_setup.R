@@ -21,7 +21,7 @@
   # ============================================================
   filtro <- reactive({
     req(input$zona)
-    if (input$zona == "Maxilar") {
+    if (input$zona == "Maxillary") {
       datag[, c(1,2,3,4,5,6)]
     } else {
       datag[, c(1,2,3,7,8,9)]
@@ -71,7 +71,7 @@
         ),
         size = "l",
         easyClose = TRUE,
-        footer = modalButton("Cerrar")
+        footer = modalButton("Close")
       )
     )
   })
@@ -85,7 +85,7 @@
         ),
         size = "l",
         easyClose = TRUE,
-        footer = modalButton("Cerrar")
+        footer = modalButton("Close")
       )
     )
   })
