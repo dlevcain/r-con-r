@@ -17,7 +17,7 @@
     m <- as.integer(cm[2])
     
     df <- data.frame(
-      group = c("Masculino", "Femenino"),
+      group = c("Male", "Female"),
       value = c(h,m)
     )
     
@@ -35,22 +35,28 @@
   
   output$plots_edad_sexo <- renderPlotly({
     dataS = datag
+    dataS <- dataS %>%
+      mutate(Sex = recode(Sexo, "Masculino" = "Male", "Femenino" = "Female"))
     
-    p1 <- plot_ly(dataS, x = ~Sexo, y = ~Edad, color = ~Sexo, type = "box") 
+    p1 <- plot_ly(dataS, x = ~Sex, y = ~Edad, color = ~Sex, type = "box") 
     p1 %>% layout( xaxis = list(title = 'Sex'), yaxis = list(title = 'Age'))
   })
   
   output$plots_ori_sexo <- renderPlotly({
     dataS = datag
+    dataS <- dataS %>%
+      mutate(Sex = recode(Sexo, "Masculino" = "Male", "Femenino" = "Female"))
     
-    fig <- plot_ly(data = dataS, x = dataS[,c(4)], y = dataS[,c(10)], color = dataS[,c(3)])
+    fig <- plot_ly(data = dataS, x = dataS[,c(4)], y = dataS[,c(10)], color = ~Sex)
     fig %>% layout( xaxis = list(title = 'Distance - Without treatment (mm) '), yaxis = list(title = 'Distance - With treatment (mm)'))
   }) 
   
   output$plots_evaluacion <- renderPlotly({
     dataS = datag
+    dataS <- dataS %>%
+      mutate(Sex = recode(Sexo, "Masculino" = "Male", "Femenino" = "Female"))
     
-    fig <- plot_ly(data = dataS, x = dataS[,c(7)], y = dataS[,c(13)], color = dataS[,c(3)])
+    fig <- plot_ly(data = dataS, x = dataS[,c(7)], y = dataS[,c(13)], color = ~Sex)
     fig %>% layout( xaxis = list(title = 'Distance - Without treatment (mm)'), yaxis = list(title = 'Distance - With treatment (mm)'))
   })
   
