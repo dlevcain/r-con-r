@@ -66,6 +66,14 @@
     zone_raw <- if (!is.null(input$zona)) input$zona else input$Zona
     treatment_raw <- if (!is.null(input$tratamiento)) input$tratamiento else input$Tratamiento
 
+    if (is.null(zone_raw) || !nzchar(zone_raw)) {
+      zone_raw <- ""
+    }
+
+    if (is.null(treatment_raw) || !nzchar(treatment_raw)) {
+      treatment_raw <- ""
+    }
+
     zone_label <- dplyr::recode(
       zone_raw,
       "Maxilar" = "Maxillary",
